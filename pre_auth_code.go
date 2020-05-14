@@ -5,11 +5,17 @@ import (
 	"github.com/owen-gxz/open-wechat/core"
 )
 
+type AuthType string
+
 const (
 	PreAuthCodeUrl  = wechatApiUrl + "/cgi-bin/component/api_create_preauthcode?component_access_token=%s"
 	AuthPageUrl     = wechatApiUrl + "/cgi-bin/componentloginpage?component_appid=%s&pre_auth_code=%s&redirect_uri=%s&auth_type=%s"
 	QueryAuthUrl    = wechatApiUrl + "/cgi-bin/component/api_query_auth?component_access_token=%s"
 	RefreshTokenUrl = wechatApiUrl + "/cgi-bin/component/api_authorizer_token?component_access_token=%s"
+
+	PreAuthAuthTypeAll     AuthType = "3" // 全部
+	PreAuthAuthTypeMinapp  AuthType = "2" // 小程序
+	PreAuthAuthTypeService AuthType = "1" // 公众号
 )
 
 type PreAuthCodeRequest struct {
@@ -37,7 +43,7 @@ func (srv *Server) PreAuthCode() (*PreAuthCodeResponse, error) {
 	return resp, nil
 }
 
-func (srv *Server) AuthUrl(redirectUri, authType string) string {
+func (srv *Server) AuthUrl(redirectUri string, authType AuthType) string {
 	pcode, err := srv.PreAuthCode()
 	if err != nil {
 		return ""
