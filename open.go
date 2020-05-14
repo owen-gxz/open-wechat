@@ -9,7 +9,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 	"strconv"
 	"sync"
 )
@@ -111,10 +110,7 @@ func (srv *Server) AddHander(t string, hander HandlerChain) {
 }
 
 func (srv *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	query:= url.Values{}
-	if query == nil {
-		query = r.URL.Query()
-	}
+	query:=r.URL.Query()
 
 	switch r.Method {
 	case "POST": // 推送消息(事件)
