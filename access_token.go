@@ -53,14 +53,14 @@ type AccessTokenRequest struct {
 	ComponentVerifyTicket string `json:"component_verify_ticket"`
 }
 
-// 获取第三方应用token
-func (srv *Server) GetAccessToken() (*AccessTokenResponse, error) {
-	ticket, err := srv.ticketServer.GetTicket()
-	if err != nil {
-		return nil, nil
-	}
-	return getAccessToken(srv.cfg.AppID, srv.cfg.AppSecret, ticket, srv.Client)
-}
+//// todo 获取第三方应用token, 该方法如果调用可能会将之前的token失效，所以取消使用
+//func (srv *Server) GetAccessToken() (*AccessTokenResponse, error) {
+//	ticket, err := srv.ticketServer.GetTicket()
+//	if err != nil {
+//		return nil, nil
+//	}
+//	return getAccessToken(srv.cfg.AppID, srv.cfg.AppSecret, ticket, srv.Client)
+//}
 
 // 获取第三方应用token
 func getAccessToken(appid, AppSecret, ticket string, client *Client) (*AccessTokenResponse, error) {

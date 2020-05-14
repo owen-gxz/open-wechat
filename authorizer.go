@@ -19,8 +19,59 @@ type AuthorizerInfoRequest struct {
 
 type AuthorizerInfoResponse struct {
 	core.Error
-	ComponentAppid  string `json:"component_appid"`
-	AuthorizerAppid string `json:"authorizer_appid"`
+	AuthorizerInfo struct {
+		// 小程序独有
+		Signature       string `json:"signature"`
+		Miniprograminfo struct {
+			Network struct {
+				RequestDomain   []string `json:"RequestDomain"`
+				WsRequestDomain []string `json:"WsRequestDomain"`
+				UploadDomain    []string `json:"UploadDomain"`
+				DownloadDomain  []string `json:"DownloadDomain"`
+			} `json:"network"`
+			Categories []struct {
+				First  string `json:"first"`
+				Second string `json:"second"`
+			} `json:"categories"`
+			VisitStatus int `json:"visit_status"`
+		} `json:"miniprograminfo"`
+
+		// 都存在的
+		//昵称
+		NickName        string `json:"nick_name"`
+		HeadImg         string `json:"head_img"`
+		//公众号类型  --公众号独有
+		ServiceTypeInfo struct {
+			ID int `json:"id"`
+		} `json:"service_type_info"`
+		// 认证类型
+		VerifyTypeInfo struct {
+			ID int `json:"id"`
+		} `json:"verify_type_info"`
+		//原始 ID
+		UserName      string `json:"user_name"`
+		// 主题名称
+		PrincipalName string `json:"principal_name"`
+		//用以了解功能的开通状况（0代表未开通，1代表已开通），详见business_info 说明
+		BusinessInfo  struct {
+			OpenStore int `json:"open_store"`
+			OpenScan  int `json:"open_scan"`
+			OpenPay   int `json:"open_pay"`
+			OpenCard  int `json:"open_card"`
+			OpenShake int `json:"open_shake"`
+		} `json:"business_info"`
+		Alias     string `json:"alias"`
+		//二维码图片的 URL，开发者最好自行也进行保存
+		QrcodeURL string `json:"qrcode_url"`
+	} `json:"authorizer_info"`
+	AuthorizationInfo struct {
+		AuthorizationAppid string `json:"authorization_appid"`
+		FuncInfo           []struct {
+			FuncscopeCategory struct {
+				ID int `json:"id"`
+			} `json:"funcscope_category"`
+		} `json:"func_info"`
+	} `json:"authorization_info"`
 }
 
 // 获取授权法信息

@@ -110,7 +110,8 @@ func (srv *Server) AddHander(t string, hander HandlerChain) {
 	srv.handlerMap[t] = hander
 }
 
-func (srv *Server) ServeHTTP(w http.ResponseWriter, r *http.Request, query url.Values) {
+func (srv *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	query:= url.Values{}
 	if query == nil {
 		query = r.URL.Query()
 	}
