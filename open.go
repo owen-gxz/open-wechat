@@ -73,7 +73,7 @@ func NewService(cfg Config, ticket TicketServer, cli *http.Client, tokenService 
 	}
 	client := NewClient(cli)
 	if tokenService == nil {
-		tokenService = &DefaultAccessTokenServer{ticket: ticket, AppID: cfg.AppID, AppSecret: cfg.AppSecret, client: client}
+		tokenService = &DefaultAccessTokenServer{ticket: ticket, AppID: cfg.AppID, AppSecret: cfg.AppSecret}
 	}
 	srv := Server{
 		cfg:               cfg,
