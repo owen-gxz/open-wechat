@@ -84,12 +84,12 @@ func (srv Server) AuthorizerInfo(authorizerAppid string) (*AuthorizerInfoRespons
 		ComponentAppid:  srv.cfg.AppID,
 		AuthorizerAppid: authorizerAppid,
 	}
-	resp := AuthorizerInfoResponse{}
+	resp := &AuthorizerInfoResponse{}
 	err = srv.PostJson(getCompleteUrl(AuthorizerInfoUrl, accessToken), req, resp)
 	if err != nil {
 		return nil, err
 	}
-	return &resp, nil
+	return resp, nil
 }
 
 type AuthorizeOption string
@@ -125,12 +125,12 @@ func (srv Server) AuthorizerOption(authorizerAppid string, optionName AuthorizeO
 		AuthorizerAppid: authorizerAppid,
 		OptionName:      optionName,
 	}
-	resp := AuthorizerOptionResponse{}
+	resp := &AuthorizerOptionResponse{}
 	err = srv.PostJson(getCompleteUrl(AuthorizerOptionUrl, accessToken), req, resp)
 	if err != nil {
 		return nil, err
 	}
-	return &resp, nil
+	return resp, nil
 }
 
 type SetAuthorizerOptionRequest struct {
@@ -156,12 +156,12 @@ func (srv Server) SetAuthorizerOption(authorizerAppid string, optionName Authori
 		},
 		OptionValue: optionValue,
 	}
-	resp := SetAuthorizerOptionResponse{}
+	resp := &SetAuthorizerOptionResponse{}
 	err = srv.PostJson(getCompleteUrl(SetAuthorizerOptionUrl, accessToken), req, resp)
 	if err != nil {
 		return nil, err
 	}
-	return &resp, nil
+	return resp, nil
 }
 
 type AuthorizerListRequest struct {
@@ -191,10 +191,10 @@ func (srv Server) AuthorizerList(offset, count int) (*AuthorizerListResponse, er
 		Offset:         offset,
 		Count:          count,
 	}
-	resp := AuthorizerListResponse{}
+	resp := &AuthorizerListResponse{}
 	err = srv.PostJson(getCompleteUrl(AuthorizerListUrl, accessToken), req, resp)
 	if err != nil {
 		return nil, err
 	}
-	return &resp, nil
+	return resp, nil
 }
