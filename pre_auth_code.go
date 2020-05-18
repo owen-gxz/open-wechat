@@ -21,6 +21,7 @@ const (
 type PreAuthCodeRequest struct {
 	ComponentAppid string `json:"component_appid"`
 }
+
 type PreAuthCodeResponse struct {
 	core.Error
 	PreAuthCode string `json:"pre_auth_code"`
@@ -95,14 +96,14 @@ type RefreshTokenRequest struct {
 }
 
 // 刷新token
-func (srv *Server) RefreshToken(code, refreshToken string) (*QueryAuthResponse, error) {
+func (srv *Server) RefreshToken(appID, refreshToken string) (*QueryAuthResponse, error) {
 	accessToken, err := srv.Token()
 	if err != nil {
 		return nil, err
 	}
 	req := RefreshTokenRequest{
 		ComponentAppid:         srv.cfg.AppID,
-		AuthorizerAppid:        code,
+		AuthorizerAppid:        appID,
 		AuthorizerRefreshToken: refreshToken,
 	}
 	resp := &QueryAuthResponse{}
