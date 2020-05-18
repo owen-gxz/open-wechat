@@ -94,9 +94,15 @@ type RefreshTokenRequest struct {
 	AuthorizerAppid        string `json:"authorizer_appid"`
 	AuthorizerRefreshToken string `json:"authorizer_refresh_token"`
 }
+type RefreshTokenResponse struct {
+	core.Error
+	AuthorizerAccessToken  string `json:"authorizer_access_token"`
+	ExpiresIn              int64  `json:"expires_in"`
+	AuthorizerRefreshToken string `json:"authorizer_refresh_token"`
+}
 
 // 刷新token
-func (srv *Server) RefreshToken(appID, refreshToken string) (*QueryAuthResponse, error) {
+func (srv *Server) RefreshToken(appID, refreshToken string) (*RefreshTokenResponse, error) {
 	accessToken, err := srv.Token()
 	if err != nil {
 		return nil, err
@@ -106,7 +112,7 @@ func (srv *Server) RefreshToken(appID, refreshToken string) (*QueryAuthResponse,
 		AuthorizerAppid:        appID,
 		AuthorizerRefreshToken: refreshToken,
 	}
-	resp := &QueryAuthResponse{}
+	resp := &RefreshTokenResponse{}
 	err = srv.PostJson(getCompleteUrl(RefreshTokenUrl, accessToken), req, resp)
 	if err != nil {
 		return nil, err
